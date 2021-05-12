@@ -27,5 +27,5 @@ func main() {
 	})
 	r.GET("/quote", handler.GetQuote)
 
-	r.Run(":5000")
+	r.Run(":3000")
 }
