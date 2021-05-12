@@ -2,25 +2,19 @@ package upstream
 
 import (
 	"encoding/json"
-	"github.com/gobaldia/stocks-api/config"
-
-	//"fmt"
-	//"net/http"
 	"fmt"
+	"github.com/gobaldia/stocks-api/config"
 	"net/http"
 )
 
 type Quote struct {
 	Symbol string
 	CurrentValue float64
-	//Variation float64
+	Variation float64
 	PreviousClose float64
 	Open float64
-	//Bid float64
-	//Ask float64
 	MarketCapitalization float64
 	Volume int
-	//AverageVolume float64
 }
 
 type AlphaVantageClient struct {
@@ -74,14 +68,11 @@ func (avc *AlphaVantageClient) GetQuote(symbol string) (*Quote, error) {
 	quote := Quote{
 		Symbol:               quoteResponse.GlobalQuote.Symbol,
 		CurrentValue:         quoteResponse.GlobalQuote.Price,
-		//Variation:            quoteResponse.GlobalQuote.,
+		Variation:            quoteResponse.GlobalQuote.Price / quoteResponse.GlobalQuote.PreviousClose,
 		PreviousClose:        quoteResponse.GlobalQuote.PreviousClose,
 		Open:                 quoteResponse.GlobalQuote.Open,
-		//Bid:                  quoteResponse.GlobalQuote.Bi,
-		//Ask:                  quoteResponse.GlobalQuote.Ask,
 		MarketCapitalization: float64(quoteResponse.GlobalQuote.Volume) * quoteResponse.GlobalQuote.Price,
 		Volume:               quoteResponse.GlobalQuote.Volume,
-		//AverageVolume:        quoteResponse.GlobalQuote.A,
 	}
 
 	return &quote, err
